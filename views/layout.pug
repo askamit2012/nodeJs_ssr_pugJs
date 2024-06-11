@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    block styles
+  body
+    nav#layout-nav 
+      ul#layout-ul
+        li 
+          a(href="/") Home 
+        li 
+          a(href="/counter") Counter 
+        li 
+          a(href="/users") Users 
+        li 
+          a(href="/to-do") To-Do 
+        li 
+          a(href="/files") Files
+    main
+      block content
+
+    footer 
+      span p © 2024 Genz Tech Solutions. All rights reserved.
+
+    block scripts 

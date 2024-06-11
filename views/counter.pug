@@ -1,0 +1,43 @@
+extends layout 
+
+block content 
+    div#counter-container 
+        h3#counter-title A Simple Counter
+        div#counter-main 
+            button#minus-button -
+            span#counter-span 0 
+            button#plus-button +
+
+block styles 
+    style.
+        #counter-container {
+            background: linear-gradient(purple, pink);
+            height: 100%;
+        }
+
+block scripts 
+    script.
+        console.log("welcome to counter")
+
+        var minusButton = document.getElementById('minus-button')
+        var plusButton = document.getElementById('plus-button')
+        var counterSpan = document.getElementById('counter-span')
+
+        console.log(minusButton, plusButton, counterSpan)
+
+        var count = 0
+
+        function minusButtonClickHandler() {
+            console.log('-')
+            count--
+            counterSpan.innerText = count
+        }
+
+        function plusButtonClickHandler() {
+            console.log('+')
+            count++
+            counterSpan.innerText = count
+        }
+
+        minusButton.addEventListener('click', minusButtonClickHandler)
+        plusButton.addEventListener('click', plusButtonClickHandler)
