@@ -1,5 +1,128 @@
 extends layout 
 
+block styles 
+    style.
+        #toDo-container {
+            background: purple;
+            color: #FFF;
+            height: 100%;
+        }
+        #input-container {
+            border: 1px solid #FFF;
+            width: 75%;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+        #input-container input {
+            width: 60%;
+        }
+        #input-container > input, button {
+            padding: 8px 12px;
+            outline: none;
+            border: none;
+        }
+
+        #input-container > input, button:hover {
+            outline: none;
+            border: none;
+        }
+
+        button {
+            cursor: pointer;
+            border: 1px solid purple;
+        }
+
+        button:hover {
+            background: purple;
+            color: #FFF;
+            border: 1px solid #FFF;
+        }
+
 block content 
     div#toDo-container 
         h3#toDo-title To-Do 
+        div#input-container 
+            input#task-input 
+            button#add-task-button Add Task
+        div#tasks-container
+
+block scripts 
+    script.
+        var tasks
+        //- tasks = JSON.parse(tasks)
+        //- console.log("tasks: ", tasks)
+
+        //- var name = "Anuktha S Kadakol"
+        //- let name = "Amit Kumar"
+        const name = "Sumit Kumar"
+
+        const tasksContainer = document.getElementById('tasks-container')
+        const taskInput = document.getElementById('task-input')
+        const addTaskButton = document.getElementById('add-task-button')
+        let taskVal = ''
+
+        taskInput.addEventListener('change', function(e) {
+            var name = "Anuktha S Kadakol"
+            taskVal = e.target.value
+        })
+
+        addTaskButton.addEventListener('click', function() {
+            let tasks = JSON.parse(window.localStorage.getItem('tasks'))
+            tasks.tasks.push({ 
+                id: Math.floor(Math.random() * 10000 ),
+                task: taskVal,
+                isChecked: false,
+                isEditable: false
+             })
+             displayTasks(tasks)
+             console.log('all tasks: ', tasks)
+             window.localStorage.setItem('tasks', JSON.stringify(tasks))
+        })
+
+        function displayTasks(tasks) {
+            tasksContainer.innerHTML = ''
+            let tasksUl = document.createElement('ul')
+            tasks.tasks.forEach(task => {
+                let taskLi = document.createElement('li')
+
+                let taskCb = document.createElement('input')
+                taskCb.type = 'checkbox'
+                taskCb.checked = task.isChecked
+                
+                let taskSpan = document.createElement('span')
+                taskSpan.innerText = task.task
+
+                let editBtn = document.createElement('button')
+                editBtn.innerText = 'Edit'
+
+                let deleteBtn = document.createElement('button')
+                deleteBtn.innerText = 'Delete'
+
+                taskLi.appendChild(taskCb)
+                taskLi.appendChild(taskSpan)
+                taskLi.appendChild(editBtn)
+                taskLi.appendChild(deleteBtn)
+
+                tasksUl.appendChild(taskLi)
+            })
+            tasksContainer.appendChild(tasksUl)
+        }
+
+        window.onload = function() {
+            //- console.log("tasks: ", window)
+            tasks = !{JSON.stringify(tasks)};
+            try {
+                if(window.localStorage.getItem('tasks')) {
+                    tasks = JSON.parse(window.localStorage.getItem('tasks'))
+                    displayTasks(tasks)
+                } else {
+                displayTasks(tasks)
+                window.localStorage.setItem('tasks', !{JSON.stringify(tasks)})
+                }
+            } catch(err) {
+                console.log("err: ", err)
+            }
+        }

@@ -17,6 +17,15 @@ block content
             div#button-container 
                 button Get Another User
             
+block scripts 
+    script.
+        const user = !{JSON.stringify(user)};
+        console.log("User data:", user);
+        const getAnotherUserButton = document.getElementsByTagName('button')[0]
+        getAnotherUserButton.addEventListener('click', function() {
+            window.location.reload()
+        })
+        
 
 block styles 
     style.
@@ -46,8 +55,3 @@ block styles
             padding: 12px 18px;
             cursor: pointer;
         }
-
-block scripts 
-    script.
-        const user = !{JSON.stringify(user)};
-        //- console.log("User data:", user);
